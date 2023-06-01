@@ -45,7 +45,7 @@ jobs:
             g++ --version && 
             ./autogen.sh &&
             ./configure --help &&
-            ./configure --enable-static --prefix="$(pwd)/${{ env.installationPath }}" &&
+            ./configure --enable-static --with-ngshared --prefix="$(pwd)/${{ env.installationPath }}" &&
             mingw32-make.exe install
             
 #       - name: copy customized openssl-config.cmake
