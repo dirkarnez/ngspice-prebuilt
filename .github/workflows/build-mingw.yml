@@ -47,7 +47,8 @@ jobs:
             ./configure --help &&
             ./configure --enable-static --with-ngshared --prefix="$(pwd)/${{ env.installationPath }}" &&
             mingw32-make.exe install
-            
+# --enable-xspice --enable-cider 
+
 #       - name: copy customized openssl-config.cmake
 #         shell: cmd
 #         run: cd /d "${{github.workspace}}" && xcopy /H /Y /C "openssl-config.cmake" "openssl\${{ env.installationPath }}"
