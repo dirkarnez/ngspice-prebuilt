@@ -32,10 +32,20 @@ jobs:
           curl https://github.com/dirkarnez/cpp-tools/raw/main/x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z -L -O -J &&^
           7z.exe x x86_64-8.1.0-release-posix-seh-rt_v6-rev0.7z
           
+      - name: curl PortableGit-2.38.1-64-bit.7z.exe
+        shell: cmd
+        run: cd /d ${{ github.workspace }} && curl https://github.com/git-for-windows/git/releases/download/v2.38.1.windows.1/PortableGit-2.38.1-64-bit.7z.exe -L --output PortableGit-2.38.1-64-bit.7z.exe && dir && 7z.exe x PortableGit-2.38.1-64-bit.7z.exe -o"PortableGit-2.38.1-64-bit"
+      
       - name: curl cmake-3.24.0-windows-x86_64.zip
         shell: cmd
         run: cd /d ${{ github.workspace }} && curl https://github.com/Kitware/CMake/releases/download/v3.24.0/cmake-3.24.0-windows-x86_64.zip -L --output cmake-3.24.0-windows-x86_64.zip && dir && 7z.exe x cmake-3.24.0-windows-x86_64.zip
       
+      - shell: cmd
+        run: |
+          cd ngspice &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/AC_SUBST(\[STATIC\], \[-shared\])/AC_SUBST(\[STATIC\], \[-static\])/g" configure.ac &&^
+          type configure.ac
+          
       - name: set PATH, check mingw version, cmake generate, build and install
         shell: msys2 {0}
         run: |
