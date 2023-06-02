@@ -44,7 +44,13 @@ jobs:
         run: |
           cd ngspice &&^
           "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/AC_SUBST(\[STATIC\], \[-shared\])/AC_SUBST(\[STATIC\], \[-static\])/g" configure.ac &&^
-          type configure.ac
+          type configure.ac &&^
+          cd src &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/libngspice_la_CFLAGS.*=.*-shared/libngspice_la_CFLAGS = -static/g" Makefile.am  &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/libngspice_la_LDFLAGS.*=.*-shared/libngspice_la_LDFLAGS = -static/g" Makefile.am  &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/libspice_la_CFLAGS.*=.*-shared/libspice_la_CFLAGS = -static/g" Makefile.am &&^
+          "${{ github.workspace }}\PortableGit-2.38.1-64-bit\usr\bin\sed.exe" -i "s/libspice_la_LDFLAGS.*=.*-shared/libspice_la_LDFLAGS = -static/g" Makefile.am &&^
+          type Makefile.am
           
       - name: set PATH, check mingw version, cmake generate, build and install
         shell: msys2 {0}
